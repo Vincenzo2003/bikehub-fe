@@ -1,0 +1,15 @@
+export * from './authentication.service';
+import { AuthenticationService } from './authentication.service';
+export * from './bicycle.service';
+import { BicycleService } from './bicycle.service';
+export * from './equipment.service';
+import { EquipmentService } from './equipment.service';
+export * from './payment.service';
+import { PaymentService } from './payment.service';
+export * from './paymentMethod.service';
+import { PaymentMethodService } from './paymentMethod.service';
+export * from './rental.service';
+import { RentalService } from './rental.service';
+export * from './statistics.service';
+import { StatisticsService } from './statistics.service';
+export const APIS = [AuthenticationService, BicycleService, EquipmentService, PaymentService, PaymentMethodService, RentalService, StatisticsService];

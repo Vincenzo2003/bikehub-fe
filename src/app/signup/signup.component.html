@@ -1,0 +1,50 @@
+<div class="container">
+  <h2>Registrazione</h2>
+  <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <input type="text" id="username" formControlName="username">
+      <div *ngIf="signupForm.get('username')?.invalid && (signupForm.get('username')?.dirty || signupForm.get('username')?.touched)" class="error-message">
+        <div *ngIf="signupForm.get('username')?.errors?.['required']">L'username è richiesto.</div>
+        <div *ngIf="signupForm.get('username')?.errors?.['minlength']">L'username deve avere almeno 3 caratteri.</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" formControlName="email">
+      <div *ngIf="signupForm.get('email')?.invalid && (signupForm.get('email')?.dirty || signupForm.get('email')?.touched)" class="error-message">
+        <div *ngIf="signupForm.get('email')?.errors?.['required']">L'email è richiesta.</div>
+        <div *ngIf="signupForm.get('email')?.errors?.['email']">Inserisci un'email valida.</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" id="password" formControlName="password">
+      <div *ngIf="signupForm.get('password')?.invalid && (signupForm.get('password')?.dirty || signupForm.get('password')?.touched)" class="error-message">
+        <div *ngIf="signupForm.get('password')?.errors?.['required']">La password è richiesta.</div>
+        <div *ngIf="signupForm.get('password')?.errors?.['minlength']">La password deve avere almeno 6 caratteri.</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="confirmPassword">Conferma Password:</label>
+      <input type="password" id="confirmPassword" formControlName="confirmPassword">
+      <div *ngIf="signupForm.get('confirmPassword')?.invalid && (signupForm.get('confirmPassword')?.dirty || signupForm.get('confirmPassword')?.touched)" class="error-message">
+        <div *ngIf="signupForm.get('confirmPassword')?.errors?.['required']">La conferma password è richiesta.</div>
+      </div>
+      <div *ngIf="signupForm.errors?.['mismatch'] && (signupForm.get('confirmPassword')?.dirty || signupForm.get('confirmPassword')?.touched)" class="error-message">
+        Le password non corrispondono.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="phoneNumber">Numero di Cellulare (Opzionale):</label>
+      <input type="text" id="phoneNumber" formControlName="phoneNumber">
+    </div>
+
+    <button type="submit" [disabled]="signupForm.invalid">Registrati</button>
+  </form>
+  <p>Hai già un account? <a routerLink="/login">Accedi qui</a>.</p>
+</div>

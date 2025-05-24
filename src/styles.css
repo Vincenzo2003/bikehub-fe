@@ -1,1 +1,162 @@
-/* You can add global styles to this file, and also import other style files */
+/* Reset CSS per una base pulita */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: #f0f2f5; /* Sfondo grigio chiaro */
+  color: #333;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column; /* Per allineare contenuto e footer */
+  min-height: 100vh; /* L'altezza minima è l'intera viewport */
+}
+
+/* Stili per la navigazione (navbar) */
+nav {
+  background-color: #2c3e50; /* Blu scuro */
+  padding: 15px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+nav ul {
+  list-style-type: none;
+  display: flex;
+  justify-content: flex-end; /* Allinea a destra */
+  margin: 0 auto;
+  max-width: 1200px; /* Larghezza massima della nav bar */
+  padding: 0 20px; /* Padding ai lati */
+}
+
+nav li {
+  margin-left: 20px; /* Spazio tra gli elementi del menu */
+}
+
+nav li a, nav li span {
+  color: white;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+}
+
+nav li a:hover {
+  background-color: #34495e; /* Colore più scuro all'hover */
+}
+
+nav li span {
+  cursor: default; /* Per Benvenuto! */
+}
+
+/* Contenitore principale per centrare il contenuto dell'app */
+/* Questo assicura che il componente della rotta (LoginComponent, SignupComponent) sia centrato */
+router-outlet + * { /* Seleziona il primo elemento fratello dopo router-outlet */
+  flex-grow: 1; /* Permette al contenuto di occupare lo spazio disponibile */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centra verticalmente */
+  align-items: center; /* Centra orizzontalmente */
+  padding: 20px; /* Padding generale */
+}
+
+/* Stili per il contenitore dei form (Login/Signup) */
+.container {
+  max-width: 450px; /* Larghezza leggermente aumentata */
+  margin: 30px auto; /* Centra e aggiunge margine */
+  padding: 30px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px; /* Bordi più arrotondati */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Ombra più pronunciata */
+  background-color: #ffffff;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #2c3e50; /* Colore del titolo abbinato alla navbar */
+  font-size: 2em; /* Titolo più grande */
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #555;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+  width: 100%;
+  padding: 12px 15px; /* Padding aumentato */
+  border: 1px solid #ccc;
+  border-radius: 5px; /* Bordi leggermente arrotondati */
+  font-size: 1.1em; /* Testo più grande */
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="text"]:focus {
+  border-color: #3498db; /* Blu più vivace al focus */
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.25); /* Ombra al focus */
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  background-color: #3498db; /* Blu vivace */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2em;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-weight: bold;
+}
+
+button[type="submit"]:hover:not(:disabled) {
+  background-color: #2980b9; /* Colore più scuro all'hover */
+  transform: translateY(-2px); /* Effetto leggero al sollevamento */
+}
+
+button[type="submit"]:disabled {
+  background-color: #aeb6bf; /* Grigio per bottone disabilitato */
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.error-message {
+  color: #e74c3c; /* Rosso più brillante per errori */
+  font-size: 0.9em;
+  margin-top: 5px;
+  padding-left: 5px; /* Leggero padding per allineamento */
+}
+
+p {
+  text-align: center;
+  margin-top: 25px;
+  color: #666;
+}
+
+p a {
+  color: #3498db;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+p a:hover {
+  color: #2980b9;
+  text-decoration: underline;
+}
