@@ -86,6 +86,38 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalServerError'
+  /bicycles:
+    get:
+      description: Retrieve bicycles.
+      operationId: retrieveBicycles
+      tags:
+        - Bicycle
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 0
+        - in: query
+          name: count
+          schema:
+            type: integer
+            maximum: 50
+            default: 5
+
+      responses:
+        '200':
+          description: Bicycles successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BicyclesPage'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
   /bicycle/{bicycleId}:
     get:
       description: Retrieve bicycle.
@@ -189,6 +221,37 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalServerError'
+  /equipments:
+    get:
+      description: Retrieve equipments.
+      operationId: retrieveEquipments
+      tags:
+        - Equipment
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 0
+        - in: query
+          name: count
+          schema:
+            type: integer
+            maximum: 50
+            default: 5
+      responses:
+        '200':
+          description: Equipments successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EquipmentsPage'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
   /equipment/{equipmentId}:
     get:
       description: Retrieve equipment.
@@ -204,7 +267,7 @@ paths:
             format: uuid
       responses:
         '200':
-          description: Bicycle successfully retrieved.
+          description: Equipment successfully retrieved.
           content:
             application/json:
               schema:
@@ -286,6 +349,37 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Rental'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /rentals:
+    get:
+      description: Retrieve rentals.
+      operationId: retrieveRentals
+      tags:
+        - Rental
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 0
+        - in: query
+          name: count
+          schema:
+            type: integer
+            maximum: 50
+            default: 5
+      responses:
+        '200':
+          description: Rentals successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RentalsPage'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -702,6 +796,15 @@ components:
         tokenType:
           type: string
           default: Bearer
+    Page:
+      type: object
+      properties:
+        totalItems:
+          type: integer
+        currentPage:
+          type: integer
+        totalPages:
+          type: integer
     CreateBicycle:
       type: object
       required:
@@ -776,6 +879,14 @@ components:
         registeredAt:
           type: string
           format: date-time
+    BicyclesPage:
+      allOf:
+        - $ref: '#/components/schemas/Page'
+        - properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/Bicycle'
     UpdateBicycle:
       type: object
       properties:
@@ -835,6 +946,14 @@ components:
           type: string
         imageUrl:
           type: string
+    EquipmentsPage:
+      allOf:
+        - $ref: '#/components/schemas/Page'
+        - properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/Equipment'
     UpdateEquipment:
       type: object
       properties:
@@ -856,6 +975,7 @@ components:
       properties:
         bicycleId:
           type: string
+          format: uuid
     Rental:
       type: object
       required:
@@ -891,6 +1011,14 @@ components:
         mileage:
           type: number
           format: float
+    RentalsPage:
+      allOf:
+        - $ref: '#/components/schemas/Page'
+        - properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/Rental'
     UpdateRental:
       type: object
       properties:
