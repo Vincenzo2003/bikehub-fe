@@ -2,11 +2,11 @@
   <h2>Login</h2>
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
-      <label for="email">Email:</label>
-      <input type="email" id="email" formControlName="email">
-      <div *ngIf="loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)" class="error-message">
-        <div *ngIf="loginForm.get('email')?.errors?.['required']">L'email è richiesta.</div>
-        <div *ngIf="loginForm.get('email')?.errors?.['email']">Inserisci un'email valida.</div>
+      <label for="username">username:</label>
+      <input type="username" id="username" formControlName="username">
+      <div *ngIf="loginForm.get('username')?.invalid && (loginForm.get('username')?.dirty || loginForm.get('username')?.touched)" class="error-message">
+        <div *ngIf="loginForm.get('username')?.errors?.['required']">L'username è richiesta.</div>
+        <div *ngIf="loginForm.get('username')?.errors?.['username']">Inserisci un'username valida.</div>
       </div>
     </div>
 

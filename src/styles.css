@@ -92,6 +92,7 @@ label {
   color: #555;
 }
 
+input[type="username"],
 input[type="email"],
 input[type="password"],
 input[type="text"] {
@@ -104,6 +105,7 @@ input[type="text"] {
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+input[type="username"]:focus,
 input[type="email"]:focus,
 input[type="password"]:focus,
 input[type="text"]:focus {
