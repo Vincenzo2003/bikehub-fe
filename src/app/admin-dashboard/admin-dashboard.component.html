@@ -1,15 +1,44 @@
 <div class="admin-dashboard-container">
-  <h2>Pannello Amministratore</h2>
+  @if (router.url === '/admin') {
+    <h2>Pannello Amministratore</h2>
+    <p>Benvenuto nel pannello di controllo dell'amministratore. Clicca su un'operazione per iniziare.</p>
 
-  <nav class="admin-nav">
-    <ul>
-      <li><a routerLink="bikes">Gestione Biciclette</a></li>
-      <li><a routerLink="equipment">Gestione Equipaggiamenti</a></li>
-      <li><a routerLink="rates">Aggiorna Tariffe</a></li>
-      <li><a routerLink="stats">Statistiche Utilizzo</a></li>
-    </ul>
-  </nav>
+    <div class="operation-grid">
+      <a routerLink="./bikes-management" class="operation-card">
+        <div class="icon-container">
+          <i class="fas fa-bicycle"></i>
+        </div>
+        <h3>Gestione Biciclette</h3>
+        <p>Aggiungi, rimuovi o modifica le biciclette disponibili.</p>
+      </a>
 
-  <div class="admin-content">
-    <router-outlet></router-outlet> </div>
+      <a routerLink="./equipment" class="operation-card">
+        <div class="icon-container">
+          <i class="fas fa-tools"></i>
+        </div>
+        <h3>Gestione Equipaggiamenti</h3>
+        <p>Gestisci gli equipaggiamenti extra per le biciclette.</p>
+      </a>
+
+      <a routerLink="./rates" class="operation-card">
+        <div class="icon-container">
+          <i class="fas fa-euro-sign"></i>
+        </div>
+        <h3>Aggiorna Tariffe</h3>
+        <p>Modifica le tariffe orarie per l'affitto delle biciclette.</p>
+      </a>
+
+      <a routerLink="./usage" class="operation-card">
+        <div class="icon-container">
+          <i class="fas fa-chart-pie"></i>
+        </div>
+        <h3>Statistiche Utilizzo</h3>
+        <p>Visualizza le percentuali di utilizzo per biciclette e categorie.</p>
+      </a>
+    </div>
+  }
+
+  <hr>
+
+  <router-outlet></router-outlet>
 </div>

@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
         next: (success: any) => {
           if (success) {
             console.log('Login successfully!');
-            this.router.navigate(['/']);
+            this.router.navigate(['/home']);
             alert('Login successfully!');
           } else {
             alert('Invalid credentials!');

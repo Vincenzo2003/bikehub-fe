@@ -1,0 +1,61 @@
+/* src/app/shared/app-header/app-header.component.css */
+.app-header {
+  background-color: #282c34; /* Un colore scuro per l'header */
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  width: 100%; /* L'header si estende per tutta la larghezza */
+  box-sizing: border-box; /* Include padding nel width */
+}
+
+.header-left,
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.header-center {
+  flex-grow: 1; /* Permette al centro di occupare lo spazio rimanente */
+  text-align: center;
+}
+
+.app-title {
+  color: #61dafb; /* Colore accattivante per il titolo */
+  text-decoration: none;
+  font-size: 1.8em;
+  font-weight: bold;
+}
+
+.header-button {
+  background-color: #4CAF50; /* Verde per Home (colore base) */
+  color: white;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.3s ease;
+  text-decoration: none; /* Per i link */
+  display: flex;
+  align-items: center;
+  margin: 0 5px; /* Spazio tra i bottoni */
+}
+
+.home-button {
+  background-color: #007bff; /* Blu per il Home */
+}
+
+.logout-button {
+  background-color: #dc3545; /* Rosso per Logout */
+}
+
+.header-button:hover {
+  filter: brightness(1.2); /* Leggero aumento luminosità al passaggio del mouse */
+}
+
+.header-button i {
+  margin-right: 5px;
+}

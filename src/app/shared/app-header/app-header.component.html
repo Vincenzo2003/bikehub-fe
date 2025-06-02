@@ -1,0 +1,19 @@
+<header class="app-header">
+  <div class="header-left">
+    @if (isLoggedIn) {
+      <a routerLink="/home" class="header-button home-button">
+        <i class="fas fa-home"></i> Home
+      </a>
+    }
+  </div>
+  <div class="header-center">
+    <a routerLink="/" class="app-title">BikeHub</a>
+  </div>
+  <div class="header-right">
+    @if (isLoggedIn) {
+      <button class="header-button logout-button" (click)="logout()">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </button>
+    }
+  </div>
+</header>

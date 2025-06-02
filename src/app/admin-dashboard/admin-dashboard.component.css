@@ -1,60 +1,63 @@
 .admin-dashboard-container {
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center; /* Centra il testo principale */
+}
+
+.admin-dashboard-container h2 {
+  color: #343a40;
+  margin-bottom: 15px;
+}
+
+.admin-dashboard-container p {
+  color: #6c757d;
+  margin-bottom: 30px;
+}
+
+.operation-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Rende le card responsive */
+  gap: 20px;
+  justify-content: center; /* Centra la griglia se ci sono meno elementi */
+}
+
+.operation-card {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 25px;
+  text-decoration: none; /* Rimuove la sottolineatura dai link */
+  color: #343a40;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 30px;
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  margin: 50px auto;
-  max-width: 900px;
-  width: 100%;
+  text-align: center;
 }
 
-h2 {
-  color: #2c3e50;
-  margin-bottom: 30px;
-  font-size: 2.5em;
+.operation-card:hover {
+  transform: translateY(-5px); /* Effetto leggero al passaggio del mouse */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-.admin-nav {
-  width: 100%;
-  margin-bottom: 30px;
-  border-bottom: 1px solid #e0e0e0;
-  padding-bottom: 15px;
+.icon-container {
+  font-size: 3em; /* Dimensione delle icone */
+  color: #007bff; /* Colore delle icone */
+  margin-bottom: 15px;
 }
 
-.admin-nav ul {
-  list-style-type: none;
-  display: flex;
-  justify-content: center;
-  padding: 0;
-  margin: 0;
+.operation-card h3 {
+  margin-top: 0;
+  color: #0056b3;
+  font-size: 1.4em;
+  margin-bottom: 10px;
 }
 
-.admin-nav li {
-  margin: 0 15px;
-}
-
-.admin-nav a {
-  text-decoration: none;
-  color: #3498db;
-  font-weight: bold;
-  padding: 10px 15px;
-  border-radius: 5px;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.admin-nav a:hover,
-.admin-nav a.active { /* Aggiungere .active con RouterLinkActive */
-  background-color: #3498db;
-  color: white;
-}
-
-.admin-content {
-  width: 100%;
-  padding: 20px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  background-color: #f9f9f9;
+.operation-card p {
+  color: #6c757d;
+  font-size: 0.9em;
+  line-height: 1.5;
+  margin-bottom: 0; /* Rimuovi margine inferiore dell'ultimo p */
 }
