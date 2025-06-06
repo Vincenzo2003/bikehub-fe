@@ -1,4 +1,4 @@
-<div class="bike-management-container">
+<div class="equipment-management-container">
   <h2>Bicycle Management</h2>
 
   @if (errorMessage) {
@@ -7,147 +7,60 @@
     </div>
   }
 
-  <div class="form-section">
-    <h3>{{ isEditing ? 'Edit Bicycle' : 'Add New Bicycle' }}</h3>
-    <form [formGroup]="bicycleForm" (ngSubmit)="submitBicycleForm()">
-      <div class="form-group">
-        <label for="currentParkingLotName">Current Parking Lot Name:</label>
-        <input id="currentParkingLotName" type="text" formControlName="currentParkingLotName">
-        @if (bicycleForm.get('currentParkingLotName')?.invalid && (bicycleForm.get('currentParkingLotName')?.dirty || bicycleForm.get('currentParkingLotName')?.touched)) {
-          <div class="error-message">
-            Parking lot name is required.
-          </div>
-        }
-      </div>
-
-      <div class="form-group">
-        <label for="category">Category:</label>
-        <select id="category" formControlName="category">
-          <option [ngValue]="null" disabled>Select a category</option>
-          @for (category of bicycleCategories; track category) {
-            <option [ngValue]="category">{{ category }}</option>
-          }
-        </select>
-        @if (bicycleForm.get('category')?.invalid && (bicycleForm.get('category')?.dirty || bicycleForm.get('category')?.touched)) {
-          <div class="error-message">
-            Category is required.
-          </div>
-        }
-      </div>
-
-      <div class="form-group">
-        <label for="chassisId">Chassis ID:</label>
-        <input id="chassisId" type="text" formControlName="chassisId" [readonly]="isEditing">
-        @if (bicycleForm.get('chassisId')?.invalid && (bicycleForm.get('chassisId')?.dirty || bicycleForm.get('chassisId')?.touched)) {
-          <div class="error-message">
-            Chassis ID is required.
-          </div>
-        }
-      </div>
-
-      <div class="form-group">
-        <label for="brand">Brand:</label>
-        <input id="brand" type="text" formControlName="brand">
-        @if (bicycleForm.get('brand')?.invalid && (bicycleForm.get('brand')?.dirty || bicycleForm.get('brand')?.touched)) {
-          <div class="error-message">
-            Brand is required.
-          </div>
-        }
-      </div>
-
-      <div class="form-group">
-        <label for="model">Model:</label>
-        <input id="model" type="text" formControlName="model">
-        @if (bicycleForm.get('model')?.invalid && (bicycleForm.get('model')?.dirty || bicycleForm.get('model')?.touched)) {
-          <div class="error-message">
-            Model is required.
-          </div>
-        }
-      </div>
-
-      <div class="form-group">
-        <label for="hourlyPrice">Hourly Price (€):</label>
-        <input id="hourlyPrice" type="number" formControlName="hourlyPrice" step="0.01">
-        @if (bicycleForm.get('hourlyPrice')?.invalid && (bicycleForm.get('hourlyPrice')?.dirty || bicycleForm.get('hourlyPrice')?.touched)) {
-          <div class="error-message">
-            Hourly price is required and must be a positive number.
-          </div>
-        }
-      </div>
-
-      @if (isEditing) {
-        <div class="form-group">
-          <label for="status">Status:</label>
-          <select id="status" formControlName="status">
-            @for (status of bicycleStatuses; track status) {
-              <option [ngValue]="status">{{ status }}</option>
-            }
-          </select>
-        </div>
-      }
-
-      <div class="form-actions">
-        <button type="submit" [disabled]="bicycleForm.invalid">
-          {{ isEditing ? 'Save Changes' : 'Add Bicycle' }}
-        </button>
-        @if (isEditing) {
-          <button type="button" (click)="cancelEdit()">Cancel</button>
-        }
-      </div>
-    </form>
+  <div class="list-header-actions">
+    <h3>Current Bicycles</h3>
+    <button class="add-new-bike-button" (click)="openAddBikeModal()">
+      <i class="fas fa-plus-circle"></i> Add New Bicycle
+    </button>
   </div>
 
-  ---
-
-  <div class="bicycle-list-section">
-    <h3>Current Bicycles</h3>
-    @if (bicycles?.length === 0 && !errorMessage) {
-      <div class="no-data-message">No bicycles found. Add one!</div>
-    }
-    @if (bicycles && bicycles.length > 0) {
-      <table class="bicycle-table">
-        <thead>
-        <tr>
-          <th>ID</th>
+  @if (bicycles?.length === 0 && !errorMessage) {
+    <div class="no-data-message">No bicycles found. Add one!</div>
+  }
+  @if (bicycles && bicycles.length > 0) {
+    <table class="bicycle-table">
+      <thead>
+      <tr>
+        <th>Chassis ID</th>
           <th>Parking Lot</th>
-          <th>Chassis ID</th>
-          <th>Brand</th>
-          <th>Model</th>
-          <th>Category</th>
-          <th>Hourly Price</th>
-          <th>Status</th>
-          <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-          @for (bicycle of bicycles; track bicycle.id) {
-            <tr>
-              <td>{{ bicycle.id | slice:0:8 }}...</td>
-              <td>{{ bicycle.currentParkingLotName }}</td>
-              <td>{{ bicycle.chassisId }}</td>
-              <td>{{ bicycle.brand }}</td>
-              <td>{{ bicycle.model }}</td>
-              <td>
-                @if (bicycle.categories) {
-                  @for (cat of bicycle.categories; track cat) {
-                    {{ cat }}{{ !$last ? ', ' : '' }}
-                  }
+        <th>Brand</th>
+        <th>Model</th>
+        <th>Category</th>
+        <th>Hourly Price</th>
+        <th>Status</th>
+      </tr>
+      </thead>
+      <tbody>
+        @for (bicycle of bicycles; track bicycle.chassisId) {
+          <tr>
+            <td>{{ bicycle.chassisId }}</td>
+            <td>{{ bicycle.currentParkingLotName }}</td>
+            <td>{{ bicycle.brand }}</td>
+            <td>{{ bicycle.model }}</td>
+            <td>
+              @if (bicycle.categories) {
+                @for (cat of bicycle.categories; track cat) {
+                  {{ cat }}{{ !$last ? ', ' : '' }}
                 }
-              </td>
-              <td>{{ bicycle.hourlyPrice | currency:'EUR':'symbol':'1.2-2' }}</td>
-              <td>
+              }
+            </td>
+            <td>{{ bicycle.hourlyPrice | currency:'EUR':'symbol':'1.2-2' }}</td>
+            <td>
               <span [ngClass]="{'status-available': bicycle.status === 'AVAILABLE', 'status-rented': bicycle.status === 'RENTED', 'status-maintenance': bicycle.status === 'UNDER_MAINTENANCE'}">
                 {{ bicycle.status }}
               </span>
-              </td>
-              <td>
-                <button class="action-button edit-button" (click)="editBicycle(bicycle)">Edit</button>
-                <button class="action-button delete-button" (click)="deleteBicycle(bicycle.id)">Delete</button>
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    }
-  </div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+
+  @if (showAddBikeModal) {
+    <app-add-bike-modal
+      [bicycleCategories]="bicycleCategories"
+      (closeModalEvent)="closeAddBikeModal()"
+      (addBikeEvent)="handleAddBike($event)">
+    </app-add-bike-modal>
+  }
 </div>

@@ -5,6 +5,7 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
 import { authGuard } from './guard/auth/auth.guard';
 import {BikeManagementComponent} from './admin-dashboard/bike-management/bike-management.component';
 import {HomeComponent} from './home/home.component';
+import {EquipmentManagementComponent} from './admin-dashboard/equipment-management/equipment-management.component';
 
 
 export const routes: Routes = [
@@ -16,7 +17,7 @@ export const routes: Routes = [
     canActivate: [authGuard], // Proteggi questa rotta con la guard
     children: [ // Rotte figlie per la dashboard amministrativa
       { path: 'bikes-management', component: BikeManagementComponent },
-      // { path: 'equipment', component: EquipmentManagementComponent },
+      { path: 'equipments-management', component: EquipmentManagementComponent },
       // { path: 'rates', component: RatesManagementComponent },
       // { path: 'usage', component: UsageStatisticsComponent },
     ]

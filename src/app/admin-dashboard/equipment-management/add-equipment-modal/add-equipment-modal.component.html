@@ -1,0 +1,56 @@
+<div class="modal-overlay" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <h3>Add New Equipment</h3>
+    @if (errorMessage) {
+      <div class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+    }
+    <form [formGroup]="equipmentForm" (ngSubmit)="submitEquipmentForm()">
+      <div class="form-group">
+        <label for="bicycleId">Current Parking Lot Name:</label>
+        <input id="bicycleId" type="text" formControlName="bicycleId">
+        @if (equipmentForm.get('bicycleId')?.invalid && (equipmentForm.get('bicycleId')?.dirty || equipmentForm.get('bicycleId')?.touched)) {
+          <div class="error-message">
+            Parking lot name is required.
+          </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="type">Chassis ID:</label>
+        <input id="type" type="text" formControlName="type">
+        @if (equipmentForm.get('type')?.invalid && (equipmentForm.get('type')?.dirty || equipmentForm.get('type')?.touched)) {
+          <div class="error-message">
+            Chassis ID is required.
+          </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="name">Brand:</label>
+        <input id="name" type="text" formControlName="name">
+        @if (equipmentForm.get('name')?.invalid && (equipmentForm.get('name')?.dirty || equipmentForm.get('name')?.touched)) {
+          <div class="error-message">
+            Brand is required.
+          </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="description">Model:</label>
+        <input id="description" type="text" formControlName="description">
+        @if (equipmentForm.get('description')?.invalid && (equipmentForm.get('description')?.dirty || equipmentForm.get('description')?.touched)) {
+          <div class="error-message">
+            Model is required.
+          </div>
+        }
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" [disabled]="equipmentForm.invalid">Add Equipment</button>
+        <button type="button" (click)="closeModal()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
