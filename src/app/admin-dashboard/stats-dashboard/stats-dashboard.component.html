@@ -1,0 +1,69 @@
+<div class="stats-container">
+  <h2>Statistiche di Utilizzo</h2>
+
+  <div class="card">
+    <h3>Statistiche per Bicicletta</h3>
+    <div class="input-group">
+      <label for="bicycleId">ID Bicicletta:</label>
+      <input
+        id="bicycleId"
+        type="text"
+        [(ngModel)]="bicycleId"
+        placeholder="Inserisci l'ID della bicicletta (UUID)"
+      />
+      <button (click)="getBicycleStats()" [disabled]="loadingBicycleStats">
+        {{ loadingBicycleStats ? 'Caricamento...' : 'Mostra Statistiche' }}
+      </button>
+    </div>
+
+    @if (errorBicycleStats) {
+      <p class="error-message">{{ errorBicycleStats }}</p>
+    }
+
+    @if (bicycleStats) {
+      <div class="stats-result">
+        <h4>Risultati:</h4>
+        <p>
+          Percentuale di Utilizzo:
+          <strong>{{ bicycleStats.usagePercentage }}%</strong>
+        </p>
+      </div>
+    }
+  </div>
+
+  <div class="card">
+    <h3>Statistiche per Categoria</h3>
+    <div class="input-group">
+      <label for="categorySelect">Seleziona Categoria:</label>
+      <select
+        id="categorySelect"
+        [(ngModel)]="selectedCategory"
+      >
+        <option [ngValue]="null">-- Seleziona una Categoria --</option>
+        @for (category of bicycleCategories; track category) {
+          <option [ngValue]="category">{{ category }}</option>
+        }
+      </select>
+      <button
+        (click)="getCategoryStats()"
+        [disabled]="!selectedCategory || loadingCategoryStats"
+      >
+        {{ loadingCategoryStats ? 'Caricamento...' : 'Mostra Statistiche' }}
+      </button>
+    </div>
+
+    @if (errorCategoryStats) {
+      <p class="error-message">{{ errorCategoryStats }}</p>
+    }
+
+    @if (categoryStats) {
+      <div class="stats-result">
+        <h4>Risultati:</h4>
+        <p>
+          Percentuale di Utilizzo:
+          <strong>{{ categoryStats.usagePercentage }}%</strong>
+        </p>
+      </div>
+    }
+  </div>
+</div>

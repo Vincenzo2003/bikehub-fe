@@ -6,6 +6,8 @@ import { authGuard } from './guard/auth/auth.guard';
 import {BikeManagementComponent} from './admin-dashboard/bike-management/bike-management.component';
 import {HomeComponent} from './home/home.component';
 import {EquipmentManagementComponent} from './admin-dashboard/equipment-management/equipment-management.component';
+import {UpdateBicyclePriceComponent} from './admin-dashboard/update-bicycle-price/update-bicycle-price.component';
+import {StatsDashboardComponent} from './admin-dashboard/stats-dashboard/stats-dashboard.component';
 
 
 export const routes: Routes = [
@@ -18,8 +20,8 @@ export const routes: Routes = [
     children: [ // Rotte figlie per la dashboard amministrativa
       { path: 'bikes-management', component: BikeManagementComponent },
       { path: 'equipments-management', component: EquipmentManagementComponent },
-      // { path: 'rates', component: RatesManagementComponent },
-      // { path: 'usage', component: UsageStatisticsComponent },
+      { path: 'rates', component: UpdateBicyclePriceComponent },
+      { path: 'stats', component: StatsDashboardComponent },
     ]
   },
   {

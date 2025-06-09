@@ -1,30 +1,34 @@
-/* Keep existing styles, add new ones for status classes */
-
+/* Stili Generali e Contenitore - Mantenuti con piccoli affinamenti */
 .equipment-management-container {
-  padding: 25px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Aggiunto font-family per coerenza */
+  padding: 30px; /* Leggermente aumentato */
   background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-radius: 12px; /* Leggermente più arrotondato */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08); /* Ombra più pronunciata ma morbida */
   max-width: 900px;
-  margin: 20px auto;
+  margin: 40px auto; /* Centrato e più spazio verticale */
 }
 
+/* Titoli - Mantenuti con piccoli affinamenti */
 h2 {
-  color: #34495e;
+  color: #343a40; /* Colore leggermente più scuro per contrasto */
   text-align: center;
-  margin-bottom: 30px;
-  font-size: 2.2em;
+  margin-bottom: 35px; /* Più spazio sotto */
+  font-size: 2.4em; /* Leggermente più grande */
+  font-weight: 600; /* Più audace */
 }
 
 h3 {
-  color: #2c3e50;
-  margin-top: 25px;
-  margin-bottom: 15px;
-  font-size: 1.6em;
-  border-bottom: 2px solid #ecf0f1;
+  color: #495057; /* Colore leggermente più scuro per contrasto */
+  font-size: 1.8em; /* Leggermente più grande */
+  font-weight: 500;
+  margin-top: 0; /* Rimosso margin-top, gestito da list-header-actions */
+  margin-bottom: 20px; /* Più spazio sotto */
+  border-bottom: 2px solid #e9ecef; /* Colore più chiaro e moderno */
   padding-bottom: 10px;
 }
 
+/* Form Sections (non presenti nell'HTML fornito per la lista, ma mantenuti per coerenza) */
 .form-section {
   margin-bottom: 30px;
   padding: 20px;
@@ -47,7 +51,7 @@ h3 {
 
 .form-group input[type="text"],
 .form-group input[type="number"],
-.form-group select { /* Added select */
+.form-group select {
   width: calc(100% - 20px);
   padding: 10px;
   border: 1px solid #ccc;
@@ -58,7 +62,7 @@ h3 {
 
 .form-group input[type="text"]:focus,
 .form-group input[type="number"]:focus,
-.form-group select:focus { /* Added select */
+.form-group select:focus {
   outline: none;
   border-color: #007bff;
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
@@ -122,12 +126,15 @@ h3 {
   margin-top: 5px;
 }
 
+/* Alert Messages - Migliorati */
 .alert {
   padding: 15px;
   margin-bottom: 20px;
   border: 1px solid transparent;
   border-radius: 8px;
   font-weight: bold;
+  animation: fadeIn 0.5s ease-out; /* Aggiunto */
+  text-align: center; /* Aggiunto */
 }
 
 .alert-danger {
@@ -136,50 +143,101 @@ h3 {
   border-color: #f5c6cb;
 }
 
-/* Table styles */
+/* Header della Lista e Azioni - Fortemente migliorati */
+.list-header-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px; /* Più spazio sotto */
+  padding-bottom: 15px; /* Spazio per la linea */
+  border-bottom: 1px solid #e9ecef; /* Linea separatrice più delicata */
+}
+
+.add-new-equipment-button { /* Mantenuto il tuo nome della classe */
+  background-color: #007bff; /* Blu primario */
+  color: white;
+  padding: 12px 25px; /* Padding più generoso */
+  border: none;
+  border-radius: 8px; /* Più arrotondato */
+  cursor: pointer;
+  font-size: 1.1em; /* Testo più grande */
+  font-weight: 600; /* Più audace */
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Transizione per effetto al click */
+}
+
+.add-new-equipment-button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px); /* Effetto leggero al passaggio del mouse */
+}
+
+.add-new-equipment-button i {
+  font-size: 1.2em; /* Icona leggermente più grande */
+}
+
+/* Messaggio Nessun Equipaggiamento - Migliorato */
+.no-data-message {
+  text-align: center;
+  color: #6c757d;
+  font-style: italic; /* Mantenuto il corsivo */
+  padding: 40px 20px; /* Padding aumentato */
+  border: 1px dashed #ced4da; /* Bordo tratteggiato per enfasi */
+  border-radius: 8px; /* Più arrotondato */
+  margin-top: 30px;
+  background-color: #e9ecef; /* Sfondo leggero */
+  font-size: 1.2em; /* Testo più grande */
+}
+
+/* Tabella Equipaggiamento - Migliorata */
 .equipment-list-section {
   margin-top: 40px;
 }
 
-.no-data-message {
-  text-align: center;
-  color: #6c757d;
-  font-style: italic;
-  padding: 20px;
-  border: 1px dashed #e0e0e0;
-  border-radius: 5px;
-  margin-top: 20px;
-}
-
-.equipment-table { /* Renamed from bike-table */
+.equipment-table {
   width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
+  border-collapse: separate; /* Per bordi arrotondati sulle celle */
+  border-spacing: 0;
+  margin-top: 25px;
+  background-color: #ffffff;
+  border-radius: 10px; /* Bordi arrotondati per la tabella */
+  overflow: hidden; /* Assicura che i bordi arrotondati funzionino */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Ombra leggera per la tabella */
 }
 
-.equipment-table th, .equipment-table td { /* Renamed from bike-table */
-  border: 1px solid #dee2e6;
-  padding: 12px;
+.equipment-table th, .equipment-table td {
+  /* border: 1px solid #dee2e6;  Rimosso il bordo singolo per una visualizzazione più pulita */
+  border-bottom: 1px solid #dee2e6; /* Solo bordo inferiore */
+  padding: 15px 20px; /* Padding aumentato */
   text-align: left;
 }
 
-.equipment-table th { /* Renamed from bike-table */
-  background-color: #e9ecef;
-  color: #495057;
-  font-weight: bold;
+.equipment-table th {
+  background-color: #e2f0fe; /* Sfondo leggero per l'header */
+  color: #004085; /* Colore più profondo */
+  font-weight: 600; /* Più audace */
   text-transform: uppercase;
-  font-size: 0.9em;
+  font-size: 1em; /* leggermente più grande */
+  position: sticky; /* Mantiene l'header visibile durante lo scroll */
+  top: 0;
+  z-index: 1;
 }
 
-.equipment-table tbody tr:nth-child(even) { /* Renamed from bike-table */
-  background-color: #f8f9fa;
+.equipment-table tbody tr:last-child td {
+  border-bottom: none; /* Rimuove il bordo inferiore sull'ultima riga */
 }
 
-.equipment-table tbody tr:hover { /* Renamed from bike-table */
-  background-color: #e2f2ff;
+.equipment-table tbody tr:nth-child(even) {
+  background-color: #fcfdfe; /* Sfondo più delicato per righe pari */
 }
 
-/* Status specific colors */
+.equipment-table tbody tr:hover {
+  background-color: #f1f7fc; /* Colore al passaggio del mouse più soft */
+  cursor: pointer; /* Indica interattività */
+}
+
+/* Status specific colors - Mantenuti */
 .status-available {
   color: #28a745; /* Green */
   font-weight: bold;
@@ -195,14 +253,18 @@ h3 {
   font-weight: bold;
 }
 
+/* Action Buttons - Mantenuti e leggermente migliorati */
 .action-button {
   padding: 8px 12px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 0.9em;
-  margin-right: 5px;
+  margin-right: 8px; /* Spazio maggiore tra i bottoni */
   transition: background-color 0.2s ease, transform 0.1s ease;
+  display: inline-flex; /* Per allineamento icona/testo se ci fossero */
+  align-items: center;
+  gap: 5px;
 }
 
 .edit-button {
@@ -225,33 +287,98 @@ h3 {
   transform: translateY(-1px);
 }
 
-/* src/app/admin-dashboard/bike-management/bike-management.component.css */
+/* Animazioni */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
-.list-header-actions {
+/* Media Queries per la reattività */
+@media (max-width: 768px) {
+  .equipment-management-container {
+    padding: 20px;
+    margin: 20px;
+  }
+
+  h2 {
+    font-size: 1.8em;
+  }
+
+  h3 {
+    font-size: 1.4em;
+  }
+
+  .list-header-actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .add-new-equipment-button {
+    width: 100%;
+    justify-content: center; /* Centra il testo e l'icona nel bottone */
+    padding: 10px 15px;
+    font-size: 1em;
+  }
+
+  /* Rendi la tabella scrollabile orizzontalmente se il contenuto è troppo grande */
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* Per un migliore scrolling su mobile */
+  }
+
+  .equipment-table {
+    font-size: 0.9em; /* Riduci la dimensione del testo della tabella sui piccoli schermi */
+  }
+
+  .equipment-table th,
+  .equipment-table td {
+    padding: 10px 15px;
+  }
+
+  .action-button {
+    padding: 6px 10px;
+    font-size: 0.8em;
+  }
+}
+
+/* Stili per la modale, se applicabili (non nell'HTML fornito, ma spesso utili) */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
+  z-index: 1000;
 }
 
-.add-new-equipment-button {
-  background-color: #007bff;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1em;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: background-color 0.3s ease;
+.modal-content {
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 500px;
+  animation: slideIn 0.3s ease-out;
 }
 
-.add-new-equipment-button:hover {
-  background-color: #0056b3;
-}
-
-.add-new-equipment-button i {
-  font-size: 1.1em;
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

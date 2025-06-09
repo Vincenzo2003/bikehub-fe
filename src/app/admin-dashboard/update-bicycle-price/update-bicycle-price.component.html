@@ -1,1 +1,60 @@
-<p>update-bicycle-price works!</p>
+<div class="container mt-4">
+  <h2>Modifica Tariffa Oraria Bicicletta</h2>
+
+  <form [formGroup]="updatePriceForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="bicycleId" class="form-label">ID Bicicletta</label>
+      <input
+        type="text"
+        id="bicycleId"
+        formControlName="bicycleId"
+        class="form-control"
+        [class.is-invalid]="updatePriceForm.get('bicycleId')?.invalid && updatePriceForm.get('bicycleId')?.touched"
+        placeholder="Inserisci l'UUID della bicicletta"
+      >
+      <div *ngIf="updatePriceForm.get('bicycleId')?.invalid && updatePriceForm.get('bicycleId')?.touched" class="invalid-feedback">
+        <div *ngIf="updatePriceForm.get('bicycleId')?.errors?.['required']">L'ID della bicicletta è obbligatorio.</div>
+        <div *ngIf="updatePriceForm.get('bicycleId')?.errors?.['pattern']">Inserisci un ID UUID valido.</div>
+      </div>
+    </div>
+
+    <button type="button" class="btn btn-info mb-3 w-100" (click)="loadBicycleDetails()" [disabled]="loadingDetails || updatePriceForm.get('bicycleId')?.invalid">
+      <span *ngIf="loadingDetails" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Carica Dettagli Bicicletta
+    </button>
+
+    <div *ngIf="bicycleFound">
+      <p class="text-center">ID Bicicletta: <strong>{{ updatePriceForm.get('bicycleId')?.value }}</strong></p>
+      <p *ngIf="currentHourlyPrice !== null" class="text-center">Tariffa oraria attuale: <strong>{{ currentHourlyPrice }}€/ora</strong></p>
+
+      <div class="mb-3">
+        <label for="hourlyPrice" class="form-label">Nuova Tariffa Oraria (€/ora)</label>
+        <input
+          type="number"
+          id="hourlyPrice"
+          formControlName="hourlyPrice"
+          class="form-control"
+          [class.is-invalid]="updatePriceForm.get('hourlyPrice')?.invalid && updatePriceForm.get('hourlyPrice')?.touched"
+          step="0.01"
+        >
+        <div *ngIf="updatePriceForm.get('hourlyPrice')?.invalid && updatePriceForm.get('hourlyPrice')?.touched" class="invalid-feedback">
+          <div *ngIf="updatePriceForm.get('hourlyPrice')?.errors?.['required']">La tariffa oraria è obbligatoria.</div>
+          <div *ngIf="updatePriceForm.get('hourlyPrice')?.errors?.['min']">La tariffa oraria deve essere maggiore di zero.</div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100" [disabled]="updatePriceForm.get('hourlyPrice')?.invalid || loadingUpdate || !bicycleFound">
+        <span *ngIf="loadingUpdate" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Modifica Tariffa
+      </button>
+    </div>
+
+    <div *ngIf="successMessage" class="alert alert-success mt-3" role="alert">
+      {{ successMessage }}
+    </div>
+
+    <div *ngIf="errorMessage" class="alert alert-danger mt-3" role="alert">
+      {{ errorMessage }}
+    </div>
+  </form>
+</div>
