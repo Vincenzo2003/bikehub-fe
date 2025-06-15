@@ -1,0 +1,58 @@
+<div class="rental-container">
+  <h2>Bicycle Rental</h2>
+
+  <div *ngIf="isLoading" class="feedback-indicator">Processing...</div>
+  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+  <div class="step" *ngIf="!currentRental">
+    <h3>Book a Bicycle</h3>
+    <div class="form-group">
+      <label for="bicycle-select">Choose an available bicycle:</label>
+      <select id="bicycle-select" [(ngModel)]="selectedBicycleId" [disabled]="isLoading || availableBicycles.length === 0">
+        <option *ngIf="availableBicycles.length === 0" value="">No bicycles available</option>
+        <option *ngFor="let bike of availableBicycles" [value]="bike.id">
+          {{ bike.chassisId }} {{ bike.brand }} {{ bike.model }} ({{ bike.hourlyPrice | currency:'EUR' }}/hr)
+        </option>
+      </select>
+    </div>
+    <button (click)="bookBicycle()" [disabled]="isLoading || !selectedBicycleId">Book Selected Bicycle</button>
+  </div>
+
+  <div *ngIf="currentRental"> <h3>Your Rental Status: <span class="status status-{{currentRental.status}}">{{ currentRental.status }}</span></h3>
+    <div class="rental-details">
+      <strong>Rental ID:</strong> {{ currentRental.id }} <br>
+      <strong>Bicycle ID:</strong> {{ currentRental.bicycleId }}
+    </div>
+
+    <div class="step" *ngIf="currentRentalStatus === RentalStatus.Created"> <p>Your bicycle is booked. Please proceed to pick it up.</p>
+      <button (click)="pickUp()" [disabled]="isLoading">Pick Up Rental</button>
+    </div>
+
+    <div class="step" *ngIf="currentRentalStatus === RentalStatus.InProgress"> <h4>Return Your Bicycle</h4>
+      <div class="form-group">
+        <label for="parking-lot">Return Parking Lot Name:</label>
+        <input type="text" id="parking-lot" [(ngModel)]="returnParkingLotName" placeholder="e.g., Central Station Lot" [disabled]="isLoading" />
+      </div>
+      <button (click)="returnRental()" [disabled]="isLoading">Return Rental</button>
+    </div>
+
+    <div class="step" *ngIf="currentRentalStatus === RentalStatus.Finished"> <h4>Complete Your Payment</h4>
+      <p>Your rental total is <strong>{{ currentRental.totalPrice | currency:'EUR' }}</strong>.</p>
+
+      <div class="form-group">
+        <label for="payment-type">Select Payment Method:</label>
+        <select id="payment-type" [(ngModel)]="selectedPaymentType" [disabled]="isLoading">
+          <option *ngFor="let type of paymentTypes" [value]="type">
+            {{ type.replace('_', ' ') | titlecase }}
+          </option>
+        </select>
+      </div>
+
+      <button (click)="payForRental()" [disabled]="isLoading">Pay Now</button>
+    </div>
+
+    <div class="step" *ngIf="currentRentalStatus === RentalStatus.Payed"> <p class="success-message">Thank you! Your rental is complete and paid for.</p>
+      <button (click)="currentRental = null; fetchAvailableBicycles()">Start a New Rental</button>
+    </div>
+  </div>
+</div>

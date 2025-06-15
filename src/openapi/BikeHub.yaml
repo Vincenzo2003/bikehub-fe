@@ -373,6 +373,16 @@ paths:
             type: integer
             maximum: 50
             default: 5
+        - in: query
+          name: userUsername
+          schema:
+            type: string
+        - in: query
+          name: statuses
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/RentalStatus'
       responses:
         '200':
           description: Rentals successfully retrieved.

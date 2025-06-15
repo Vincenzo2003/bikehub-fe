@@ -4,14 +4,12 @@ import {catchError, map, tap} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import {jwtDecode} from 'jwt-decode'; // Importa jwtDecode
 import {AuthenticationService as GeneratedApiService} from '../../../gen/bikehub/api/authentication.service';
-import {AccountRole, AuthLogin, Login, SignUp, SignUp201Response} from '../../../gen/bikehub';
+import {AuthLogin, Login, SignUp, SignUp201Response} from '../../../gen/bikehub'; // Rimosso AccountRole in quanto non utilizzato direttamente qui
 
 
 export enum UserRole {
   Customer = 'CUSTOMER',
-
   Admin = 'ADMIN',
-
   Guest = 'GUEST'
 }
 
@@ -22,8 +20,12 @@ export class AuthService {
   private _isLoggedIn = new BehaviorSubject<boolean>(false);
   isLoggedIn$ = this._isLoggedIn.asObservable();
 
-  private _role = new BehaviorSubject<UserRole>(UserRole.Guest); // Nuovo BehaviorSubject per il ruolo Admin
-  role$ = this._role.asObservable(); // Espone l'Observable
+  private _role = new BehaviorSubject<UserRole>(UserRole.Guest);
+  role$ = this._role.asObservable();
+
+  // NUOVO: BehaviorSubject per l'username
+  private _username = new BehaviorSubject<string | null>(null); // Inizializzato a null
+  username$ = this._username.asObservable(); // Espone l'Observable dell'username
 
   private readonly TOKEN_KEY = 'authToken';
 
@@ -40,26 +42,37 @@ export class AuthService {
     this._isLoggedIn.next(loggedIn);
 
     if (loggedIn) {
-      this.decodeAndSetRole(token!); // Decodifica e imposta il ruolo
+      this.decodeAndSetUserData(token!); // Chiamiamo il metodo aggiornato
     } else {
-      this._role.next(UserRole.Guest); // Se non loggato, non è admin
+      this._role.next(UserRole.Guest);
+      this._username.next(null); // Resetta l'username se non loggato
     }
   }
 
-  private decodeAndSetRole(token: string): void {
+  // AGGIORNATO: Metodo per decodificare e impostare sia ruolo che username
+  private decodeAndSetUserData(token: string): void {
     try {
       const decodedToken: any = jwtDecode(token);
+
       const userRole: string = decodedToken.role;
       if (userRole === 'CUSTOMER') {
         this._role.next(UserRole.Customer);
       } else if (userRole === 'ADMIN') {
         this._role.next(UserRole.Admin);
+      } else {
+        this._role.next(UserRole.Guest); // Gestisce ruoli sconosciuti
       }
       console.log('Ruolo utente dal token:', userRole);
+
+      const username: string = decodedToken.sub; // Estrae l'username dal campo 'sub'
+      this._username.next(username); // Imposta l'username
+      console.log('Username utente dal token:', username);
+
     } catch (error) {
       console.error('Errore durante la decodifica del token JWT:', error);
       this._role.next(UserRole.Guest);
-      this.logout();
+      this._username.next(null); // Resetta l'username in caso di errore
+      this.logout(); // Effettua il logout in caso di token non valido
     }
   }
 
@@ -71,12 +84,13 @@ export class AuthService {
         if (response.accessToken) {
           localStorage.setItem(this.TOKEN_KEY, response.accessToken);
           this._isLoggedIn.next(true);
-          this.decodeAndSetRole(response.accessToken); // Decodifica il ruolo dopo il login
-          console.log('Login riuscito! Token salvato.');
+          this.decodeAndSetUserData(response.accessToken); // Chiamiamo il metodo aggiornato dopo il login
+          console.log('Login riuscito! Token e dati utente salvati.');
         } else {
           console.warn('Login riuscito, ma nessun token nella risposta.');
           this._isLoggedIn.next(false);
           this._role.next(UserRole.Guest);
+          this._username.next(null);
         }
       }),
       map(() => true),
@@ -84,6 +98,7 @@ export class AuthService {
         console.error('Errore durante il login:', error);
         this._isLoggedIn.next(false);
         this._role.next(UserRole.Guest);
+        this._username.next(null);
         return of(false);
       })
     );
@@ -112,9 +127,10 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem(this.TOKEN_KEY);
     this._isLoggedIn.next(false);
-    this._role.next(UserRole.Guest); // Resetta il ruolo admin al logout
+    this._role.next(UserRole.Guest);
+    this._username.next(null); // Resetta l'username al logout
     this.router.navigate(['/login']);
-    console.log('Logout effettuato. Token rimosso.');
+    console.log('Logout effettuato. Token e dati utente rimossi.');
   }
 
   getToken(): string | null {
@@ -123,5 +139,10 @@ export class AuthService {
 
   getRole(): Observable<UserRole> {
     return this.role$;
+  }
+
+  // NUOVO: Metodo per ottenere l'username come Observable
+  getUsername(): Observable<string | null> {
+    return this.username$;
   }
 }

@@ -25,6 +25,8 @@ import { PayRental } from '../model/payRental';
 // @ts-ignore
 import { Rental } from '../model/rental';
 // @ts-ignore
+import { RentalStatus } from '../model/rentalStatus';
+// @ts-ignore
 import { RentalsPage } from '../model/rentalsPage';
 // @ts-ignore
 import { ReturnRentalDetails } from '../model/returnRentalDetails';
@@ -342,19 +344,29 @@ export class RentalService extends BaseService {
      * Retrieve rentals.
      * @param page 
      * @param count 
+     * @param userUsername 
+     * @param statuses 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public retrieveRentals(page?: number, count?: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<RentalsPage>;
-    public retrieveRentals(page?: number, count?: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<RentalsPage>>;
-    public retrieveRentals(page?: number, count?: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<RentalsPage>>;
-    public retrieveRentals(page?: number, count?: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public retrieveRentals(page?: number, count?: number, userUsername?: string, statuses?: Array<RentalStatus>, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<RentalsPage>;
+    public retrieveRentals(page?: number, count?: number, userUsername?: string, statuses?: Array<RentalStatus>, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<RentalsPage>>;
+    public retrieveRentals(page?: number, count?: number, userUsername?: string, statuses?: Array<RentalStatus>, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<RentalsPage>>;
+    public retrieveRentals(page?: number, count?: number, userUsername?: string, statuses?: Array<RentalStatus>, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
           <any>page, 'page');
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
           <any>count, 'count');
+        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+          <any>userUsername, 'userUsername');
+        if (statuses) {
+            statuses.forEach((element) => {
+                localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+                  <any>element, 'statuses');
+            })
+        }
 
         let localVarHeaders = this.defaultHeaders;
 

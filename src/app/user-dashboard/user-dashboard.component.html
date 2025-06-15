@@ -1,0 +1,28 @@
+<div class="user-dashboard-container">
+  @if (router.url === '/user') {
+    <h2>Pannello Utente</h2>
+    <p>Benvenuto nel pannello di controllo dell'utente. Clicca su un'operazione per iniziare.</p>
+
+    <div class="operation-grid">
+      <a routerLink="./rental-management" class="operation-card">
+        <div class="icon-container">
+          <i class="fas fa-bicycle"></i>
+        </div>
+        <h3>Gestione Noleggi</h3>
+        <p>test.</p>
+      </a>
+
+      <a routerLink="./payment-management" class="operation-card">
+        <div class="icon-container">
+          <i class="fas fa-chart-pie"></i>
+        </div>
+        <h3>Gestione metodi di pagamento</h3>
+        <p>test</p>
+      </a>
+    </div>
+  }
+
+  <hr>
+
+  <router-outlet></router-outlet>
+</div>

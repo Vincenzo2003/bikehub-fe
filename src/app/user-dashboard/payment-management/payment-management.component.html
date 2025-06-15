@@ -1,0 +1,145 @@
+<div class="container">
+  <div class="card">
+    <h2>Gestione Metodi di Pagamento</h2>
+
+    <h3>Aggiungi un Nuovo Metodo di Pagamento</h3>
+    <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="type">Tipo di Pagamento:</label>
+        <select id="type" formControlName="type" required>
+          <option value="" disabled>Seleziona un tipo</option>
+          <option *ngFor="let type of paymentTypes" [value]="type">
+            {{ type | titlecase }}
+          </option>
+        </select>
+        <div *ngIf="typeControl.hasError('required') && typeControl.touched" class="error-message">
+          Il tipo di pagamento è obbligatorio.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="cc">Numero Carta (CC):</label>
+        <input type="text" id="cc" formControlName="cc" placeholder="XXXX-XXXX-XXXX-XXXX" required>
+        <div *ngIf="ccControl.hasError('required') && ccControl.touched" class="error-message">
+          Il numero della carta è obbligatorio.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="cvc">CVC:</label>
+        <input type="text" id="cvc" formControlName="cvc" placeholder="XXX" required>
+        <div *ngIf="cvcControl.hasError('required') && cvcControl.touched" class="error-message">
+          Il CVC è obbligatorio.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="holder">Titolare Carta:</label>
+        <input type="text" id="holder" formControlName="holder" placeholder="Nome Cognome" required>
+        <div *ngIf="holderControl.hasError('required') && holderControl.touched" class="error-message">
+          Il nome del titolare è obbligatorio.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="expireAt">Data Scadenza (MM/YY):</label>
+        <input type="text" id="expireAt" formControlName="expireAt" placeholder="MM/YY" required>
+        <div *ngIf="expireAtControl.hasError('required') && expireAtControl.touched" class="error-message">
+          La data di scadenza è obbligatoria.
+        </div>
+      </div>
+
+      <button type="submit" [disabled]="paymentForm.invalid">Aggiungi Metodo</button>
+    </form>
+
+    <hr>
+
+    <h3>Metodi di Pagamento Esistenti</h3>
+    <div class="table-container">
+      <table class="payment-table">
+        <thead>
+        <tr>
+          <th>Tipo</th>
+          <th>Numero Carta</th>
+          <th>Titolare</th>
+          <th>Scadenza</th>
+          <th>Azioni</th>
+        </tr>
+        </thead>
+        <tbody>
+        <ng-container *ngIf="(paymentMethods$ | async) as methods">
+          <tr *ngIf="methods.length === 0">
+            <td colspan="5" class="no-data">Nessun metodo di pagamento trovato.</td>
+          </tr>
+          <tr *ngFor="let method of methods">
+            <td>{{ method.type | titlecase }}</td>
+            <td>{{ maskCreditCard(method.cc) }}</td>
+            <td>{{ method.holder | titlecase }}</td>
+            <td>{{ formatExpireDate(method.expireAt) }}</td>
+            <td>
+              <button class="action-button edit-button" (click)="openEditModal(method)">Modifica</button>
+              <button class="action-button delete-button" (click)="deletePaymentMethod(method.id!)">Elimina</button>
+            </td>
+          </tr>
+        </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" *ngIf="isEditModalOpen">
+  <div class="modal-content">
+    <h3>Modifica Metodo di Pagamento</h3>
+    <form [formGroup]="editPaymentForm" *ngIf="editPaymentForm">
+      <div class="form-group">
+        <label for="editType">Tipo di Pagamento:</label>
+        <select id="editType" formControlName="type" required>
+          <option *ngFor="let type of paymentTypes" [value]="type">
+            {{ type | titlecase }}
+          </option>
+        </select>
+        <div *ngIf="editTypeControl.hasError('required') && editTypeControl.touched" class="error-message">
+          Il tipo di pagamento è obbligatorio.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="editCc">Numero Carta (CC):</label>
+        <input type="text" id="editCc" formControlName="cc" placeholder="XXXX-XXXX-XXXX-XXXX" required>
+        <div *ngIf="editCcControl.hasError('required') && editCcControl.touched" class="error-message">
+          Il numero della carta è obbligatorio.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="editCvc">CVC:</label>
+        <input type="text" id="editCvc" formControlName="cvc" placeholder="XXX" required>
+        <div *ngIf="editCvcControl.hasError('required') && editCvcControl.touched" class="error-message">
+          Il CVC è obbligatorio.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="editHolder">Titolare Carta:</label>
+        <input type="text" id="editHolder" formControlName="holder" placeholder="Nome Cognome" required>
+        <div *ngIf="editHolderControl.hasError('required') && editHolderControl.touched" class="error-message">
+          Il nome del titolare è obbligatorio.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="editExpireAt">Data Scadenza (MM/YY):</label>
+        <input type="text" id="editExpireAt" formControlName="expireAt" placeholder="MM/YY" required>
+        <div *ngIf="editExpireAtControl.hasError('required') && editExpireAtControl.touched" class="error-message">
+          La data di scadenza è obbligatoria.
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" (click)="closeEditModal()">Annulla</button>
+        <button type="button" (click)="saveEditedPaymentMethod()" [disabled]="editPaymentForm.invalid">Salva</button>
+      </div>
+    </form>
+  </div>
+</div>

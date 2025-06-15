@@ -8,6 +8,9 @@ import {HomeComponent} from './home/home.component';
 import {EquipmentManagementComponent} from './admin-dashboard/equipment-management/equipment-management.component';
 import {UpdateBicyclePriceComponent} from './admin-dashboard/update-bicycle-price/update-bicycle-price.component';
 import {StatsDashboardComponent} from './admin-dashboard/stats-dashboard/stats-dashboard.component';
+import {UserDashboardComponent} from './user-dashboard/user-dashboard.component';
+import {RentalComponent} from './user-dashboard/rental-management/rental-management.component';
+import {PaymentManagementComponent} from './user-dashboard/payment-management/payment-management.component';
 
 
 export const routes: Routes = [
@@ -22,6 +25,15 @@ export const routes: Routes = [
       { path: 'equipments-management', component: EquipmentManagementComponent },
       { path: 'rates', component: UpdateBicyclePriceComponent },
       { path: 'stats', component: StatsDashboardComponent },
+    ]
+  },
+  {
+    path: 'user',
+    component: UserDashboardComponent,
+    canActivate: [authGuard], // Proteggi questa rotta con la guard
+    children: [ // Rotte figlie per la dashboard amministrativa
+      { path: 'rental-management', component: RentalComponent },
+      { path: 'payment-management', component: PaymentManagementComponent },
     ]
   },
   {

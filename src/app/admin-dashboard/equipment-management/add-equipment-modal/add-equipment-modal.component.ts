@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {EquipmentType} from '../../../../gen/bikehub';
 
 @Component({
   selector: 'app-add-equipment-modal',
