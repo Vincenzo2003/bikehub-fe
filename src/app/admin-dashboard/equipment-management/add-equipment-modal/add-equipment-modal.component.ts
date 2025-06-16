@@ -20,6 +20,8 @@ export class AddEquipmentModalComponent implements OnInit {
   equipmentForm!: FormGroup;
   errorMessage: string | null = null;
 
+  equipmentTypes = Object.values(EquipmentType);
+
   constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {

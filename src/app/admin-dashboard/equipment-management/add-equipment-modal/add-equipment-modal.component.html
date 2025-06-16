@@ -18,11 +18,20 @@
       </div>
 
       <div class="form-group">
-        <label for="type">Tipo:</label>
-        <input id="type" type="text" formControlName="type">
+        <label for="equipment-type">Tipo di equipaggiamento:</label>
+
+        <select id="equipment-type" class="form-control" formControlName="type">
+
+          <option value="" disabled>Seleziona un tipo...</option>
+
+          @for (type of equipmentTypes; track type) {
+            <option [value]="type">{{ type }}</option>
+          }
+        </select>
+
         @if (equipmentForm.get('type')?.invalid && (equipmentForm.get('type')?.dirty || equipmentForm.get('type')?.touched)) {
           <div class="error-message">
-            Il tipo è obbligatorio.
+            La selezione di un tipo è obbligatoria.
           </div>
         }
       </div>
