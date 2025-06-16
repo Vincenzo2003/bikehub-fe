@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
       if (role === UserRole.Admin) {
         this.router.navigate(['/admin']);
       } else if (role === UserRole.Customer) { // Assuming 'customer' maps to UserRole.Customer
-        this.router.navigate(['/customer']);
+        this.router.navigate(['/user']);
       } else {
         this.router.navigate(['/login']);
       }

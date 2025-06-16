@@ -1,6 +1,6 @@
 <div class="modal-overlay" (click)="closeModal()">
   <div class="modal-content" (click)="$event.stopPropagation()">
-    <h3>Add New Bicycle</h3>
+    <h3>Aggiungi una nuova Bicicletta</h3>
     @if (errorMessage) {
       <div class="alert alert-danger">
         {{ errorMessage }}
@@ -8,17 +8,17 @@
     }
     <form [formGroup]="bicycleForm" (ngSubmit)="submitBicycleForm()">
       <div class="form-group">
-        <label for="currentParkingLotName">Current Parking Lot Name:</label>
+        <label for="currentParkingLotName">Nome del parcheggio corrente:</label>
         <input id="currentParkingLotName" type="text" formControlName="currentParkingLotName">
         @if (bicycleForm.get('currentParkingLotName')?.invalid && (bicycleForm.get('currentParkingLotName')?.dirty || bicycleForm.get('currentParkingLotName')?.touched)) {
           <div class="error-message">
-            Parking lot name is required.
+            Il nome del parcheggio è obbligatorio.
           </div>
         }
       </div>
 
       <div class="form-group">
-        <label for="categories">Categories:</label>
+        <label for="categories">Categorie:</label>
         <select id="categories" formControlName="categories" multiple>
           @for (category of bicycleCategories; track category) {
             <option [ngValue]="category">{{ category }}</option>
@@ -26,17 +26,17 @@
         </select>
         @if (bicycleForm.get('categories')?.invalid && (bicycleForm.get('categories')?.dirty || bicycleForm.get('categories')?.touched)) {
           <div class="error-message">
-            At least one category is required.
+            Almeno una categoria è richiesta.
           </div>
         }
       </div>
 
       <div class="form-group">
-        <label for="chassisId">Chassis ID:</label>
+        <label for="chassisId">Identificativo Telaio:</label>
         <input id="chassisId" type="text" formControlName="chassisId">
         @if (bicycleForm.get('chassisId')?.invalid && (bicycleForm.get('chassisId')?.dirty || bicycleForm.get('chassisId')?.touched)) {
           <div class="error-message">
-            Chassis ID is required.
+            L'identificativo Telaio è obbligatorio.
           </div>
         }
       </div>
@@ -46,34 +46,34 @@
         <input id="brand" type="text" formControlName="brand">
         @if (bicycleForm.get('brand')?.invalid && (bicycleForm.get('brand')?.dirty || bicycleForm.get('brand')?.touched)) {
           <div class="error-message">
-            Brand is required.
+            Il Brand è obbligatorio.
           </div>
         }
       </div>
 
       <div class="form-group">
-        <label for="model">Model:</label>
+        <label for="model">Modello:</label>
         <input id="model" type="text" formControlName="model">
         @if (bicycleForm.get('model')?.invalid && (bicycleForm.get('model')?.dirty || bicycleForm.get('model')?.touched)) {
           <div class="error-message">
-            Model is required.
+            Il Modello è obbligatorio.
           </div>
         }
       </div>
 
       <div class="form-group">
-        <label for="hourlyPrice">Hourly Price (€):</label>
+        <label for="hourlyPrice">Prezzo orario (€):</label>
         <input id="hourlyPrice" type="number" formControlName="hourlyPrice" step="0.01">
         @if (bicycleForm.get('hourlyPrice')?.invalid && (bicycleForm.get('hourlyPrice')?.dirty || bicycleForm.get('hourlyPrice')?.touched)) {
           <div class="error-message">
-            Hourly price is required and must be a positive number.
+            Il prezzo orario è obbligatorio.
           </div>
         }
       </div>
 
       <div class="form-actions">
-        <button type="submit" [disabled]="bicycleForm.invalid">Add Bicycle</button>
-        <button type="button" (click)="closeModal()">Cancel</button>
+        <button type="submit" [disabled]="bicycleForm.invalid">Aggiungi bicicletta</button>
+        <button type="button" (click)="closeModal()">Cancella</button>
       </div>
     </form>
   </div>

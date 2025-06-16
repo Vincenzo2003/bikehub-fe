@@ -1,5 +1,5 @@
 <div class="equipment-management-container">
-  <h2>Bicycle Management</h2>
+  <h2>Gestione biciclette</h2>
 
   @if (errorMessage) {
     <div class="alert alert-danger">
@@ -8,26 +8,26 @@
   }
 
   <div class="list-header-actions">
-    <h3>Current Bicycles</h3>
+    <h3>Bicicletta corrente</h3>
     <button class="add-new-bike-button" (click)="openAddBikeModal()">
-      <i class="fas fa-plus-circle"></i> Add New Bicycle
+      <i class="fas fa-plus-circle"></i> Aggiungi una nuova bicicletta
     </button>
   </div>
 
   @if (bicycles?.length === 0 && !errorMessage) {
-    <div class="no-data-message">No bicycles found. Add one!</div>
+    <div class="no-data-message">Nessuna bicicletta trovata. Aggiungine una!</div>
   }
   @if (bicycles && bicycles.length > 0) {
     <table class="bicycle-table">
       <thead>
       <tr>
-        <th>Chassis ID</th>
-          <th>Parking Lot</th>
+        <th>Identificativo Telaio</th>
+        <th>Parcheggio</th>
         <th>Brand</th>
-        <th>Model</th>
-        <th>Category</th>
-        <th>Hourly Price</th>
-        <th>Status</th>
+        <th>Modello</th>
+        <th>Categoria</th>
+        <th>Prezzo orario</th>
+        <th>Stato</th>
       </tr>
       </thead>
       <tbody>
