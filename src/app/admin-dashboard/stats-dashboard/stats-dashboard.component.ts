@@ -6,7 +6,7 @@ import {
   BicycleCategory,
   Stats,
   StatisticsService
-} from '../../../gen/bikehub'; // Assicurati che il percorso sia corretto
+} from '../../../gen/bikehub';
 
 @Component({
   selector: 'app-stats-dashboard',
@@ -16,19 +16,19 @@ import {
   styleUrls: ['./stats-dashboard.component.css'],
 })
 export class StatsDashboardComponent implements OnInit {
-  // Statistiche per bicicletta
+
   bicycleId: string = '';
   bicycleStats: Stats | null = null;
   loadingBicycleStats: boolean = false;
   errorBicycleStats: string | null = null;
-  // Non serve un flag 'noBicycleFound' separato, 'errorBicycleStats' può gestirlo.
 
-  // Statistiche per categoria
+
+
   selectedCategory: BicycleCategory | null = null;
   categoryStats: Stats | null = null;
   loadingCategoryStats: boolean = false;
   errorCategoryStats: string | null = null;
-  // Non serve un flag 'noCategoryStatsAvailable' separato, 'errorCategoryStats' può gestirlo.
+
 
   // Elenco delle categorie disponibili (dal tuo OpenAPI)
   bicycleCategories: BicycleCategory[] = Object.values(BicycleCategory);

@@ -2,9 +2,9 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {catchError, map, tap} from 'rxjs/operators';
 import {Router} from '@angular/router';
-import {jwtDecode} from 'jwt-decode'; // Importa jwtDecode
+import {jwtDecode} from 'jwt-decode';
 import {AuthenticationService as GeneratedApiService} from '../../../gen/bikehub/api/authentication.service';
-import {AuthLogin, Login, SignUp, SignUp201Response} from '../../../gen/bikehub'; // Rimosso AccountRole in quanto non utilizzato direttamente qui
+import {AuthLogin, Login, SignUp, SignUp201Response} from '../../../gen/bikehub';
 
 
 export enum UserRole {
@@ -23,9 +23,9 @@ export class AuthService {
   private _role = new BehaviorSubject<UserRole>(UserRole.Guest);
   role$ = this._role.asObservable();
 
-  // NUOVO: BehaviorSubject per l'username
-  private _username = new BehaviorSubject<string | null>(null); // Inizializzato a null
-  username$ = this._username.asObservable(); // Espone l'Observable dell'username
+
+  private _username = new BehaviorSubject<string | null>(null);
+  username$ = this._username.asObservable();
 
   private readonly TOKEN_KEY = 'authToken';
 
@@ -33,7 +33,7 @@ export class AuthService {
     private generatedApiService: GeneratedApiService,
     private router: Router
   ) {
-    this.checkAuthStatus(); // Controlla lo stato all'avvio
+    this.checkAuthStatus();
   }
 
   private checkAuthStatus(): void {
@@ -42,14 +42,14 @@ export class AuthService {
     this._isLoggedIn.next(loggedIn);
 
     if (loggedIn) {
-      this.decodeAndSetUserData(token!); // Chiamiamo il metodo aggiornato
+      this.decodeAndSetUserData(token!);
     } else {
       this._role.next(UserRole.Guest);
-      this._username.next(null); // Resetta l'username se non loggato
+      this._username.next(null);
     }
   }
 
-  // AGGIORNATO: Metodo per decodificare e impostare sia ruolo che username
+
   private decodeAndSetUserData(token: string): void {
     try {
       const decodedToken: any = jwtDecode(token);
@@ -60,11 +60,11 @@ export class AuthService {
       } else if (userRole === 'ADMIN') {
         this._role.next(UserRole.Admin);
       } else {
-        this._role.next(UserRole.Guest); // Gestisce ruoli sconosciuti
+        this._role.next(UserRole.Guest);
       }
       console.log('Ruolo utente dal token:', userRole);
 
-      const username: string = decodedToken.sub; // Estrae l'username dal campo 'sub'
+      const username: string = decodedToken.sub;
       this._username.next(username); // Imposta l'username
       console.log('Username utente dal token:', username);
 

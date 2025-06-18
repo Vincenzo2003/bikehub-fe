@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component'; // Importa il LoginComponent
-import { SignupComponent } from './signup/signup.component'; // Importa il SignupComponent
-import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component'; // Importa la dashboard
+import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { authGuard } from './guard/auth/auth.guard';
 import {BikeManagementComponent} from './admin-dashboard/bike-management/bike-management.component';
 import {HomeComponent} from './home/home.component';
@@ -19,8 +19,8 @@ export const routes: Routes = [
   {
     path: 'admin',
     component: AdminDashboardComponent,
-    canActivate: [authGuard], // Proteggi questa rotta con la guard
-    children: [ // Rotte figlie per la dashboard amministrativa
+    canActivate: [authGuard],
+    children: [
       { path: 'bikes-management', component: BikeManagementComponent },
       { path: 'equipments-management', component: EquipmentManagementComponent },
       { path: 'rates', component: UpdateBicyclePriceComponent },
@@ -30,19 +30,19 @@ export const routes: Routes = [
   {
     path: 'user',
     component: UserDashboardComponent,
-    canActivate: [authGuard], // Proteggi questa rotta con la guard
-    children: [ // Rotte figlie per la dashboard amministrativa
+    canActivate: [authGuard],
+    children: [
       { path: 'rental-management', component: RentalComponent },
       { path: 'payment-management', component: PaymentManagementComponent },
     ]
   },
   {
-    path: 'home', // Nuova rotta home
+    path: 'home',
     component: HomeComponent,
-    canActivate: [authGuard] // Proteggi la rotta home con la guard di autenticazione
+    canActivate: [authGuard]
   },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', redirectTo: '/login' }
-  // Puoi aggiungere altre rotte qui in futuro, es. per una dashboard
-  // { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] }
+
+
 ];

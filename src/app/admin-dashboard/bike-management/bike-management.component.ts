@@ -34,12 +34,12 @@ export class BikeManagementComponent implements OnInit {
 
   showAddBikeModal: boolean = false;
 
-  private readonly API_URL = 'http://localhost:8080';
+  private readonly API_URL = 'http://localhost:8080'
 
   constructor(private http: HttpClient, private fb: FormBuilder) {
     this.bicycleForm = this.fb.group({
       currentParkingLotName: ['', Validators.required],
-      category: [null, Validators.required], // Rimane così per l'editing con singola selezione
+      category: [null, Validators.required],
       chassisId: [{ value: '', disabled: false }, Validators.required],
       brand: ['', Validators.required],
       model: ['', Validators.required],

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormControl } from '@angular/forms'; // Importa anche FormControl e AbstractControl
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable, BehaviorSubject, switchMap } from 'rxjs';
 
-// Importa i modelli e il servizio generati
+
 import {
   ApiModule,
   CreatePaymentMethod,
@@ -21,7 +21,7 @@ import {
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    ApiModule // Importa il modulo API generato
+    ApiModule
   ],
   templateUrl: './payment-management.component.html',
   styleUrls: ['./payment-management.component.css']
@@ -33,18 +33,18 @@ export class PaymentManagementComponent implements OnInit {
   paymentMethods$: Observable<PaymentMethod[]>;
   private refreshPaymentMethods = new BehaviorSubject<boolean>(true);
 
-  // Variabili per il modale di modifica
+
   isEditModalOpen: boolean = false;
   currentEditingPaymentMethod: PaymentMethod | null = null;
-  editPaymentForm!: FormGroup; // Form per la modifica nel modale
+  editPaymentForm!: FormGroup;
 
   constructor(
     private fb: FormBuilder,
     private paymentService: PaymentService,
     private paymentMethodService: PaymentMethodService
 ) {
-    // Form per l'aggiunta di un nuovo metodo di pagamento
-    // Validazione semplificata: solo "required"
+
+
     this.paymentForm = this.fb.group({
       type: ['', Validators.required],
       cc: ['', Validators.required],

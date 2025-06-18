@@ -56,7 +56,7 @@ select {
   border-radius: 4px;
   font-size: 1em;
   width: 100%;
-  box-sizing: border-box; // Include padding e border nel width
+  box-sizing: border-box;
 }
 
 input[type="text"]:focus,
@@ -110,7 +110,7 @@ hr {
 .payment-table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 600px; // Per garantire leggibilità su schermi piccoli
+  min-width: 600px;
 }
 
 .payment-table th,

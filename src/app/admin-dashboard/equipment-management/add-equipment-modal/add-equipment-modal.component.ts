@@ -41,7 +41,7 @@ export class AddEquipmentModalComponent implements OnInit {
     if (this.equipmentForm.valid) {
       this.addEquipmentEvent.emit(this.equipmentForm.value);
     } else {
-      this.equipmentForm.markAllAsTouched(); // Mostra errori di validazione
+      this.equipmentForm.markAllAsTouched();
     }
   }
 

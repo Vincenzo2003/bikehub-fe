@@ -1,12 +1,12 @@
-// src/app/user-dashboard/rental-management/rental-management.component.ts
 
-import {Component, OnInit, OnDestroy} from '@angular/core'; // Aggiungi OnDestroy
+
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
-import {finalize, Subscription} from 'rxjs'; // Importa Subscription
+import {finalize, Subscription} from 'rxjs';
 
 import {RentalManagementService} from '../../service/rental/rental.service';
-import {AuthService, UserRole} from '../../service/auth/auth.service'; // Importa AuthService e UserRole
+import {AuthService, UserRole} from '../../service/auth/auth.service';
 import {
   Bicycle,
   BicycleService,
@@ -25,46 +25,46 @@ import {
   templateUrl: './rental-management.component.html',
   styleUrls: ['./rental-management.component.css'],
 })
-export class RentalComponent implements OnInit, OnDestroy { // Implementa OnDestroy
-  // State management
+export class RentalComponent implements OnInit, OnDestroy {
+
   availableBicycles: Bicycle[] = [];
   currentRental: Rental | null = null;
   currentRentalStatus: RentalStatus | null = null;
   isLoading = false;
   errorMessage: string | null = null;
 
-  // Form inputs
+
   selectedBicycleId: string = '';
   returnParkingLotName: string | null | undefined = null;
 
   selectedPaymentType: PaymentType = PaymentType.CreditCard;
   paymentTypes = Object.values(PaymentType);
 
-  currentUserUsername: string | null = null; // Sarà impostato dal AuthService
-  private usernameSubscription: Subscription | undefined; // Per gestire la sottoscrizione
+  currentUserUsername: string | null = null;
+  private usernameSubscription: Subscription | undefined;
 
   constructor(
     private rentalManagementService: RentalManagementService,
     private bicycleService: BicycleService,
-    private authService: AuthService // Inietta AuthService
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
-    // Sottoscriviti all'username per ottenere l'utente corrente
+
     this.usernameSubscription = this.authService.getUsername().subscribe(username => {
       this.currentUserUsername = username;
-      // Solo dopo aver ottenuto l'username, puoi tentare di recuperare i noleggi
+
       if (this.currentUserUsername) {
         this.fetchCurrentRentalForUser();
       } else {
-        // Se non c'è username (utente non loggato), mostra le biciclette disponibili per book
+
         this.fetchAvailableBicycles();
       }
     });
   }
 
   ngOnDestroy(): void {
-    // È fondamentale disiscriversi per evitare memory leak
+
     if (this.usernameSubscription) {
       this.usernameSubscription.unsubscribe();
     }
@@ -85,15 +85,15 @@ export class RentalComponent implements OnInit, OnDestroy { // Implementa OnDest
   }
 
   fetchCurrentRentalForUser(): void {
-    if (!this.currentUserUsername) { // Aggiungi un controllo esplicito
+    if (!this.currentUserUsername) {
       console.warn('Cannot fetch current rental: currentUserUsername is not set.');
-      this.fetchAvailableBicycles(); // Se l'username non è impostato, mostra le bici disponibili
+      this.fetchAvailableBicycles();
       return;
     }
 
     this.setLoading();
     this.rentalManagementService
-      .retrieveUserRentalsByStatuses(this.currentUserUsername, [ // Usa this.currentUserUsername
+      .retrieveUserRentalsByStatuses(this.currentUserUsername, [
         RentalStatus.Created,
         RentalStatus.InProgress,
         RentalStatus.Finished,
@@ -120,7 +120,7 @@ export class RentalComponent implements OnInit, OnDestroy { // Implementa OnDest
         },
       });
   }
-  // ... (restanti metodi bookBicycle, pickUp, returnRental, payForRental, setLoading, handleError)
+
   bookBicycle(): void {
     if (!this.selectedBicycleId) return;
     this.setLoading();
@@ -132,7 +132,7 @@ export class RentalComponent implements OnInit, OnDestroy { // Implementa OnDest
       .subscribe({
         next: (rental) => {
           this.currentRental = rental;
-          this.currentRentalStatus = rental.status; // Aggiorna lo stato del noleggio corrente
+          this.currentRentalStatus = rental.status;
         },
         error: (err) => this.handleError('Failed to book rental', err),
       });
@@ -147,7 +147,7 @@ export class RentalComponent implements OnInit, OnDestroy { // Implementa OnDest
       .subscribe({
         next: (rental) => {
           this.currentRental = rental;
-          this.currentRentalStatus = rental.status; // Aggiorna lo stato del noleggio corrente
+          this.currentRentalStatus = rental.status;
         },
         error: (err) => this.handleError('Failed to pick up rental', err),
       });
@@ -167,7 +167,7 @@ export class RentalComponent implements OnInit, OnDestroy { // Implementa OnDest
       .subscribe({
         next: (rental) => {
           this.currentRental = rental;
-          this.currentRentalStatus = rental.status; // Aggiorna lo stato del noleggio corrente
+          this.currentRentalStatus = rental.status;
         },
         error: (err) => this.handleError('Failed to return rental', err),
       });
@@ -185,8 +185,8 @@ export class RentalComponent implements OnInit, OnDestroy { // Implementa OnDest
       .subscribe({
         next: (rental) => {
           this.currentRental = rental;
-          this.currentRentalStatus = rental.status; // Aggiorna lo stato del noleggio corrente
-          // Se il pagamento è andato a buon fine, potremmo voler pulire il noleggio corrente
+          this.currentRentalStatus = rental.status;
+
           // per permettere all'utente di iniziare un nuovo ciclo.
           if (rental.status === RentalStatus.Payed) {
             this.currentRental = null;
